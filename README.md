@@ -1,9 +1,6 @@
 # On Vmware's Market Place is a new Serice Installer with Harbor (There are some issues with Harbor and does not seem to get installed or started). 
 
-## Here are some steps to fix the shortcoming: 
-
-
-### Deploy the OVA: 
+## Deploy the OVA: 
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/ova1.png)
 
@@ -41,8 +38,36 @@ ls -l `grep Working /etc/systemd/system/harbor.service | awk -F '=' '{print $2}'
 
 ls: cannot access '/opt/vmware/arcas/tools/harbor': No such file or directory
 ```
-
 So here is the root of the problem!
+
+## There are 2 options - 1 a script - 2 the manual way
+
+### The script (looks like was written for DHCP but with a teak works for static IP)
+
+```
+chmod +x /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+vi /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+
+Change from:
+echo "Update admin password."
+sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+echo "Update password for the root user of Harbor DB."
+sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+
+
+Change to: 
+#echo "Update admin password."
+#sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+#echo "Update password for the root user of Harbor DB."
+#sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+
+/opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+
+
+```
+
+
+## The manual way: 
 
 ### Lets check out the directory below and we see the tar file is not extracted 
 
