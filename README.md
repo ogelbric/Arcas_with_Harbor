@@ -15,4 +15,8 @@
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/ova5.png)
 
+### Power on the deployed VM and ssh to it
+
+
+
 
