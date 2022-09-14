@@ -55,7 +55,7 @@ echo "Update password for the root user of Harbor DB."
 sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
 
 
-Change to (in my case VMware1!): 
+Change to (in my case VMware1!) or this could be changed to $(cat /etc/.secrets/root_password): 
 echo "Update admin password."
 sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: VMware1!/g" harbor.yml
 echo "Update password for the root user of Harbor DB."
@@ -64,12 +64,7 @@ sed -i "s/password: root123/password: VMware1!/g" harbor.yml
 #then run
 /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
 
-Then goto 
-  http://192.168.1.39:9080
-This should re-direct you to 
-  https://192.168.1.39:9443
-  
-Log on with admin/VMware1!
+Then goto http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:9443 and log on with admin/VMware1!
 
 
 ```
