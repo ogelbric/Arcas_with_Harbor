@@ -44,3 +44,17 @@ ls: cannot access '/opt/vmware/arcas/tools/harbor': No such file or directory
 
 So here is the root of the problem!
 
+### Lets check out the directory below and we see the tar file is not extracted 
+
+```
+cd /opt/vmware/arcas/tools
+ls
+tar xvfz harbor-offline-installer-v2.5.3+vmware.1.tgz
+```
+
+### Lets see whats in the new directory
+
+
+
+
+
