@@ -52,8 +52,40 @@ ls
 tar xvfz harbor-offline-installer-v2.5.3+vmware.1.tgz
 ```
 
-### Lets see whats in the new directory
+### In the new directory there is a template file for Harbor that needs to be copied and modified 
 
+```
+cp harbor.yml.tmpl harbor.yml   
+```
+
+### What needs to be changed
+
+```
+# Before we change anything lets get a few falues we need, IP and mount point
+
+root@arcas [ /opt/vmware/arcas/tools/harbor ]# nslookup `hostname` | grep Address | tail -1 | awk '{print $2}'
+192.168.1.39
+
+root@arcas [ /opt/vmware/arcas/tools/harbor ]# df -h | grep -i harbor  | awk '{print $6}'
+/harbor_storage
+
+cat harbor.yml | grep port | grep -v '#'
+  port: 80
+  port: 443
+  
+```
+### Now vi the file
+
+```
+Hostname -> IP filed 
+  hostname: reg.mydomain.com -> 192.168.1.39
+Port Number add one
+  80 -> 81
+  443 -> 444
+Mount Point
+  data_volume: /data  -> data_volume: /harbor_storage
+
+```
 
 
 
