@@ -34,3 +34,13 @@ systemctl status harbor
 journalctl -u harbor.service | tail -20
 ```
 
+### Looks like there is a directory missing for Harbor
+
+```
+ls -l `grep Working /etc/systemd/system/harbor.service | awk -F '=' '{print $2}'`
+
+ls: cannot access '/opt/vmware/arcas/tools/harbor': No such file or directory
+```
+
+So here is the root of the problem!
+
