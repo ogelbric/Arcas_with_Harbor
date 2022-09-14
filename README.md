@@ -71,7 +71,6 @@ root@arcas [ /opt/vmware/arcas/tools/harbor ]# df -h | grep -i harbor  | awk '{p
 
 cat harbor.yml | grep port | grep -v '#'
   port: 80
-  port: 443
   
 ```
 ### Now vi the file
