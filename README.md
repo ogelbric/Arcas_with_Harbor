@@ -78,6 +78,11 @@ Log on with admin/VMware1!
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
 
+### Copy file to Arcas machine: 
+
+```
+pscp tanzu_154.tar root@192.168.1.39:/opt/vmware/arcas/tools/.
+```
 
 
 ## The manual way: 
