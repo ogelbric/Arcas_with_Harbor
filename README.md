@@ -81,12 +81,148 @@ Hostname -> IP filed
   hostname: reg.mydomain.com -> 192.168.1.39
 Port Number add one
   80 -> 81
-  443 -> 444
 Mount Point
   data_volume: /data  -> data_volume: /harbor_storage
 
+Change place in this section #'s in front unless you have a cert for ssl
+
+# https related config                                                                                                                                     
+#https:                                                                                                                                                   
+  # https port for harbor, default is 443                                                                                                                 
+#  port: 444                                                                                                                                               
+  # The path of cert and key files for nginx                                                                                                               
+#  certificate: /your/certificate/path                                                                                                                     
+#  private_key: /your/private/key/path   
+
 ```
 
+### Check you work
+
+```
+grep -e hostname -e port -e data_vol harbor.yml | grep -v "#"
+hostname: 192.168.1.39
+  port: 81
+data_volume: /harbor_storage
+```
+
+### Now install Harbor
+```
+cd /opt/vmware/arcas/tools/harbor
+./install.sh
+```
+
+### Outcome
+```
+root@arcas [ /opt/vmware/arcas/tools/harbor ]# ./install.sh
+
+[Step 0]: checking if docker is installed ...
+
+Note: docker version: 20.10.11
+
+[Step 1]: checking docker-compose is installed ...
+
+Note: docker-compose version: 1.26.2
+
+[Step 2]: loading Harbor images ...
+Loaded image: vmware.io/goharbor/notary-signer-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/trivy-adapter-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-core:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-registryctl:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-jobservice:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/chartmuseum-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-log:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/redis-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/registry-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/prepare:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-portal:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/nginx-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/notary-server-photon:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-db:v2.5.3_vmware.1
+Loaded image: vmware.io/goharbor/harbor-exporter:v2.5.3_vmware.1
+
+
+[Step 3]: preparing environment ...
+
+[Step 4]: preparing harbor configs ...
+prepare base dir is set to /opt/vmware/arcas/tools/harbor
+WARNING:root:WARNING: HTTP protocol is insecure. Harbor will deprecate http protocol in the future. Please make sure to upgrade to https
+Generated configuration file: /config/portal/nginx.conf
+Generated configuration file: /config/log/logrotate.conf
+Generated configuration file: /config/log/rsyslog_docker.conf
+Generated configuration file: /config/nginx/nginx.conf
+Generated configuration file: /config/core/env
+Generated configuration file: /config/core/app.conf
+Generated configuration file: /config/registry/config.yml
+Generated configuration file: /config/registryctl/env
+Generated configuration file: /config/registryctl/config.yml
+Generated configuration file: /config/db/env
+Generated configuration file: /config/jobservice/env
+Generated configuration file: /config/jobservice/config.yml
+Generated and saved secret to file: /data/secret/keys/secretkey
+Successfully called func: create_root_cert
+Generated configuration file: /compose_location/docker-compose.yml
+Clean up the input dir
+
+
+
+[Step 5]: starting Harbor ...
+Creating network "harbor_harbor" with the default driver
+Creating harbor-log ... done
+Creating harbor-portal ... done
+Creating redis         ... done
+Creating registry      ... done
+Creating registryctl   ... done
+Creating harbor-db     ... done
+Creating harbor-core   ... done
+Creating nginx             ... done
+Creating harbor-jobservice ... done
+✔ ----Harbor has been installed and started successfully.----
+```
+
+### Habror is running in docker
+
+```
+root@arcas [ /opt/vmware/arcas/tools/harbor ]# docker ps -a
+CONTAINER ID   IMAGE                                                   COMMAND                  CREATED         STATUS                   PORTS                                   NAMES
+e946636a76c3   vmware.io/goharbor/nginx-photon:v2.5.3_vmware.1         "nginx -g 'daemon of…"   6 minutes ago   Up 6 minutes (healthy)   0.0.0.0:81->8080/tcp, :::81->8080/tcp   nginx
+a48bf3620c00   vmware.io/goharbor/harbor-jobservice:v2.5.3_vmware.1    "/harbor/entrypoint.…"   6 minutes ago   Up 6 minutes (healthy)                                           harbor-jobservice
+87ad6bcdb24e   vmware.io/goharbor/harbor-core:v2.5.3_vmware.1          "/harbor/entrypoint.…"   6 minutes ago   Up 6 minutes (healthy)                                           harbor-core
+c38c07cfe081   vmware.io/goharbor/harbor-registryctl:v2.5.3_vmware.1   "/home/harbor/start.…"   6 minutes ago   Up 6 minutes (healthy)                                           registryctl
+872f71241e59   vmware.io/goharbor/harbor-db:v2.5.3_vmware.1            "/docker-entrypoint.…"   6 minutes ago   Up 6 minutes (healthy)                                           harbor-db
+e93e13477a5a   vmware.io/goharbor/registry-photon:v2.5.3_vmware.1      "/home/harbor/entryp…"   6 minutes ago   Up 6 minutes (healthy)                                           registry
+3e0e185ade3c   vmware.io/goharbor/redis-photon:v2.5.3_vmware.1         "redis-server /etc/r…"   6 minutes ago   Up 6 minutes (healthy)                                           redis
+8aecd876a9dd   vmware.io/goharbor/harbor-portal:v2.5.3_vmware.1        "nginx -g 'daemon of…"   6 minutes ago   Up 6 minutes (healthy)                                           harbor-portal
+63daac61929c   vmware.io/goharbor/harbor-log:v2.5.3_vmware.1           "/bin/sh -c /usr/loc…"   6 minutes ago   Up 6 minutes (healthy)   127.0.0.1:1514->10514/tcp               harbor-log
+root@arcas [ /opt/vmware/arcas/tools/harbor ]# docker images -a
+REPOSITORY                                TAG               IMAGE ID       CREATED        SIZE
+vmware.io/goharbor/harbor-exporter        v2.5.3_vmware.1   5e5c4db4025b   2 months ago   87.2MB
+vmware.io/goharbor/chartmuseum-photon     v2.5.3_vmware.1   ef139f7e5902   2 months ago   148MB
+vmware.io/goharbor/redis-photon           v2.5.3_vmware.1   557112156e7c   2 months ago   154MB
+vmware.io/goharbor/trivy-adapter-photon   v2.5.3_vmware.1   1840ef41b15d   2 months ago   244MB
+vmware.io/goharbor/notary-server-photon   v2.5.3_vmware.1   fe92db1a04e8   2 months ago   99.1MB
+vmware.io/goharbor/notary-signer-photon   v2.5.3_vmware.1   5db5cc148122   2 months ago   96.6MB
+vmware.io/goharbor/harbor-registryctl     v2.5.3_vmware.1   2af4f234fa92   2 months ago   136MB
+vmware.io/goharbor/registry-photon        v2.5.3_vmware.1   36be3ac52388   2 months ago   77.9MB
+vmware.io/goharbor/nginx-photon           v2.5.3_vmware.1   1d168ab51bda   2 months ago   44.3MB
+vmware.io/goharbor/harbor-log             v2.5.3_vmware.1   aee0823eb650   2 months ago   161MB
+vmware.io/goharbor/harbor-jobservice      v2.5.3_vmware.1   26d82b3b0937   2 months ago   227MB
+vmware.io/goharbor/harbor-core            v2.5.3_vmware.1   0ee79be0716f   2 months ago   203MB
+vmware.io/goharbor/harbor-portal          v2.5.3_vmware.1   805ebb37c371   2 months ago   52.6MB
+vmware.io/goharbor/harbor-db              v2.5.3_vmware.1   519b3ed6ab4d   2 months ago   224MB
+vmware.io/goharbor/prepare                v2.5.3_vmware.1   fa3936095f14   2 months ago   166MB
+```
+
+### Test the login screen
+
+```
+#password is here
+grep -i admin_password /opt/vmware/arcas/tools/harbor/harbor.yml | grep -v "#" 
+harbor_admin_password: Harbor12345
+```
+
+![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/login1.png)
+
+![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/login2.png)
 
 
 
