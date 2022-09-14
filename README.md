@@ -17,6 +17,20 @@
 
 ### Power on the deployed VM and ssh to it
 
+### Run a few commands to see that nothing is running and we have a mount point 
 
+```
+docker images -a
+docker ps -a
+lsof | grep -i Harbor
+netstat -na | grep -i Harbor
+df -h | grep -i Harbor  
+```
 
+### And harbor wants to run but errors out
+
+```
+systemctl status harbor
+journalctl -u harbor.service | tail -20
+```
 
