@@ -74,6 +74,11 @@ Log on with admin/VMware1!
 
 ```
 
+### Then download from market place tanzu_154.tar
+
+![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
+
+
 
 ## The manual way: 
 
