@@ -63,6 +63,12 @@ Change to:
 
 /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
 
+Then goto 
+  http://192.168.1.39:9080
+This should re-direct you to 
+  https://192.168.1.39:9443
+  
+Log on with admin/Habor12345
 
 ```
 
