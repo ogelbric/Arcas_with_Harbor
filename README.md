@@ -1,4 +1,5 @@
-# On Vmware's Market Place is a new Serice Installer with Harbor (There are some issues with Harbor and does not seem to get installed or started). 
+# Vmware's Market Place has a Serice Installer with Harbor
+Here is a play by play on how to make it work. 
 
 ## Deploy the OVA: 
 
