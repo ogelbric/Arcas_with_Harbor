@@ -73,7 +73,7 @@ Then goto Harbor http://192.168.1.39:9080 or get re-directed to https://192.168.
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
 
-### Copy file to Arcas machine: 
+### Copy file to Arcas machine (my case Windows to Linux): 
 
 ```
 pscp tanzu_154.tar root@192.168.1.39:/opt/vmware/arcas/tools/.
