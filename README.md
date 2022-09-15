@@ -69,7 +69,7 @@ Then goto http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:94
 
 ```
 
-### Then download from market place tanzu_154.tar
+### Then download from market place tanzu_154.tar bundle (air gap)
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
 
@@ -78,6 +78,28 @@ Then goto http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:94
 ```
 pscp tanzu_154.tar root@192.168.1.39:/opt/vmware/arcas/tools/.
 ```
+### Lets see if we can Import the bundle
+
+```
+root@arcas [ /opt/vmware/arcas/tools ]# arcas --load_tanzu_image_to_harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor
+Load Tanzu Images to Harbor failed {'ERROR_CODE': 500, 'msg': "[Errno 2] No such file or directory: '/harbor_storage/cert/photon-machine.local.crt' Failed Harbor image push", 'responseType': 'ERROR'}
+```
+### Small problem fixed by moving the cert into a different file
+
+```
+root@arcas [ /opt/vmware/arcas/tools ]# cd /harbor_storage/cert/
+root@arcas [ /harbor_storage/cert ]# 
+root@arcas [ /harbor_storage/cert ]# cp *.crt /harbor_storage/cert/photon-machine.local.crt
+root@arcas [ /harbor_storage/cert ]# arcas --load_tanzu_image_to_harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor Successfully
+root@arcas [ /harbor_storage/cert ]# 
+
+```
+
+![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/harboroutcome.png)
+
 
 
 ## The manual way: 
