@@ -64,7 +64,7 @@ sed -i "s/password: root123/password: VMware1!/g" harbor.yml
 #then run
 /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
 
-Then goto http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:9443 and log on with admin/VMware1!
+Then goto Harbor http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:9443 and log on with admin/VMware1!
 
 
 ```
