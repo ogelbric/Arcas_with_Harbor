@@ -97,6 +97,7 @@ Load_Tanzu_Image: Load Tanzu Images to Harbor Successfully
 root@arcas [ /harbor_storage/cert ]# 
 
 ```
+### Outcome in Harbor 135 items loaded
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/harboroutcome.png)
 
