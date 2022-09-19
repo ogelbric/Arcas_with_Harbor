@@ -56,11 +56,11 @@ echo "Update password for the root user of Harbor DB."
 sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
 
 
-Change to (in my case VMware1!) or this could be changed to $(cat /etc/.secrets/root_password): 
+Change to  $(cat /etc/.secrets/root_password): 
 echo "Update admin password."
-sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: VMware1!/g" harbor.yml
+sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(cat /etc/.secrets/root_password)/g" harbor.yml
 echo "Update password for the root user of Harbor DB."
-sed -i "s/password: root123/password: VMware1!/g" harbor.yml
+sed -i "s/password: root123/password: $(cat /etc/.secrets/root_password)/g" harbor.yml
 
 #then run
 /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
