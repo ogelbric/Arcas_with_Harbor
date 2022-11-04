@@ -58,8 +58,10 @@ pscp -P 22 tanzu_16.tar root@192.168.3.39:/opt/vmware/arcas/tools/.
 ### Lets see if we can Import the bundle
 
 ```
-root@arcas [ /opt/vmware/arcas/tools ]# arcas --load_tanzu_image_to_harbor
+ls -l /opt/vmware/arcas/tools/tanzu_*.tar
+arcas --load_tanzu_image_to_harbor
 Load_Tanzu_Image: Load Tanzu Images to Harbor
+
 Load Tanzu Images to Harbor failed {'ERROR_CODE': 500, 'msg': "[Errno 2] No such file or directory: '/harbor_storage/cert/photon-machine.local.crt' Failed Harbor image push", 'responseType': 'ERROR'}
 ```
 ### Small problem fixed by moving the cert into a different file
@@ -301,3 +303,26 @@ sed -i "s/password: root123/password: $(cat /etc/.secrets/root_password)/g" harb
 /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
 ```
 
+
+### Older trouble shooting steps
+### Lets see if we can Import the bundle
+
+```
+ls -l /opt/vmware/arcas/tools/tanzu_*.tar
+arcas --load_tanzu_image_to_harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor
+
+Load Tanzu Images to Harbor failed {'ERROR_CODE': 500, 'msg': "[Errno 2] No such file or directory: '/harbor_storage/cert/photon-machine.local.crt' Failed Harbor image push", 'responseType': 'ERROR'}
+```
+### Small problem fixed by moving the cert into a different file
+
+```
+root@arcas [ /opt/vmware/arcas/tools ]# cd /harbor_storage/cert/
+root@arcas [ /harbor_storage/cert ]# 
+root@arcas [ /harbor_storage/cert ]# cp *.crt /harbor_storage/cert/photon-machine.local.crt
+root@arcas [ /harbor_storage/cert ]# arcas --load_tanzu_image_to_harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor
+Load_Tanzu_Image: Load Tanzu Images to Harbor Successfully
+root@arcas [ /harbor_storage/cert ]# 
+
+```
