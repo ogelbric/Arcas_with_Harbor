@@ -42,7 +42,7 @@ Then goto Harbor http://192.168.3.39:9080 or get re-directed to https://192.168.
 
 ```
 
-### Then download from market place tanzu_6.tar bundle (Air gap)
+### Then download from market place tanzu_16.tar bundle (Air gap)
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
 
