@@ -15,7 +15,7 @@ Here is a play by play on how to make it work.
 
 ### Power on the deployed VM and ssh to it
 
-### Run a few commands to see that nothing is running and we have a mount point 
+### Run a few commands to see that nothing is running and we have a mount point. 
 
 ```
 docker images -a
