@@ -18,17 +18,17 @@ Here is a play by play on how to make it work.
 
 ### Power on the deployed VM and ssh to it
 
-### Run a few commands to see that nothing is running and we have a mount point. 
+### Run a few commands to see that everything is running and we have a mount point. 
 
 ```
 docker images -a
 docker ps -a
 lsof | grep -i Harbor
-netstat -na | grep -i Harbor
+netstat -na | grep -i Listen | grep 9443
 df -h | grep -i Harbor  
 ```
 
-### And harbor wants to run but errors out
+### And Harbor is running with out errors
 
 ```
 systemctl status harbor
