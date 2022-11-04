@@ -35,52 +35,21 @@ systemctl status harbor
 journalctl -u harbor.service | tail -20
 ```
 
-### Looks like there is a directory missing for Harbor
+### Connect to Harbor in a browser
 
 ```
-ls -l `grep Working /etc/systemd/system/harbor.service | awk -F '=' '{print $2}'`
-
-ls: cannot access '/opt/vmware/arcas/tools/harbor': No such file or directory
-```
-So here is the root of the problem!
-
-## There are 2 options - 1 a script - 2 the manual way
-
-### The script (looks like was written for DHCP but with a teak works for static IP)
-
-```
-chmod +x /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
-vi /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
-
-Change from:
-echo "Update admin password."
-sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
-echo "Update password for the root user of Harbor DB."
-sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
-
-
-Change to  $(cat /etc/.secrets/root_password): 
-echo "Update admin password."
-sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(cat /etc/.secrets/root_password)/g" harbor.yml
-echo "Update password for the root user of Harbor DB."
-sed -i "s/password: root123/password: $(cat /etc/.secrets/root_password)/g" harbor.yml
-
-#then run
-/opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
-
-Then goto Harbor http://192.168.1.39:9080 or get re-directed to https://192.168.1.39:9443 and log on with admin/VMware1!
-
+Then goto Harbor http://192.168.3.39:9080 or get re-directed to https://192.168.3.39:9443 and log on with admin/VMware1!
 
 ```
 
-### Then download from market place tanzu_154.tar bundle (air gap)
+### Then download from market place tanzu_6.tar bundle (Air gap)
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/tanzu_154.png)
 
 ### Copy file to Arcas machine (my case Windows to Linux): 
 
 ```
-pscp tanzu_154.tar root@192.168.1.39:/opt/vmware/arcas/tools/.
+pscp -P 22 tanzu_16.tar root@192.168.3.39:/opt/vmware/arcas/tools/.
 ```
 ### Lets see if we can Import the bundle
 
@@ -289,4 +258,42 @@ harbor_admin_password: Harbor12345
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/login2.png)
 
 
+
+
+### older trouble shooting commands
+
+
+### Looks like there is a directory missing for Harbor
+
+```
+ls -l `grep Working /etc/systemd/system/harbor.service | awk -F '=' '{print $2}'`
+
+ls: cannot access '/opt/vmware/arcas/tools/harbor': No such file or directory
+```
+So here is the root of the problem!
+
+## There are 2 options - 1 a script - 2 the manual way
+
+### The script (looks like was written for DHCP but with a teak works for static IP)
+
+```
+chmod +x /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+vi /opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+
+Change from:
+echo "Update admin password."
+sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+echo "Update password for the root user of Harbor DB."
+sed -i "s/password: root123/password: $(/opt/vmware/bin/ovfenv --key sivt.password)/g" harbor.yml
+
+
+Change to  $(cat /etc/.secrets/root_password): 
+echo "Update admin password."
+sed -i "s/harbor_admin_password: Harbor12345/harbor_admin_password: $(cat /etc/.secrets/root_password)/g" harbor.yml
+echo "Update password for the root user of Harbor DB."
+sed -i "s/password: root123/password: $(cat /etc/.secrets/root_password)/g" harbor.yml
+
+#then run
+/opt/vmware/arcas/bin/extract_and_install_harbor_dhcp.sh
+```
 
