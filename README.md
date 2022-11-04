@@ -51,6 +51,9 @@ Then goto Harbor http://192.168.3.39:9080 or get re-directed to https://192.168.
 ```
 pscp -P 22 tanzu_16.tar root@192.168.3.39:/opt/vmware/arcas/tools/.
 ```
+### Double checked up to here.....!!!! scp seems to take a while...!!!!!
+
+
 ### Lets see if we can Import the bundle
 
 ```
