@@ -1,4 +1,4 @@
-# Vmware's Market Place has a Serice Installer with Harbor
+# Vmware's Market Place has a Serice Installer (1.4) with Harbor
 ```
 https://marketplace.cloud.vmware.com/services/details/service-installer-for-vmware-tanzu-1?slug=true
 ```
