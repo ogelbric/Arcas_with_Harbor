@@ -38,7 +38,8 @@ journalctl -u harbor.service | tail -20
 ### Connect to Harbor in a browser
 
 ```
-Then goto Harbor http://192.168.3.39:9080 or get re-directed to https://192.168.3.39:9443 and log on with admin/VMware1!
+Then goto Harbor http://192.168.3.39:9080 or 
+get re-directed to https://192.168.3.39:9443 and log on with admin/(the OVA password !!!!)
 
 ```
 
