@@ -52,37 +52,24 @@ get re-directed to https://192.168.3.39:9443 and log on with admin/(the OVA pass
 ```
 pscp -P 22 tanzu_16.tar root@192.168.3.39:/opt/vmware/arcas/tools/.
 ```
-### Double checked up to here.....!!!! scp seems to take a while...!!!!!
-
 
 ### Lets see if we can Import the bundle
 
 ```
 ls -l /opt/vmware/arcas/tools/tanzu_*.tar
 arcas --load_tanzu_image_to_harbor
-Load_Tanzu_Image: Load Tanzu Images to Harbor
 
-Load Tanzu Images to Harbor failed {'ERROR_CODE': 500, 'msg': "[Errno 2] No such file or directory: '/harbor_storage/cert/photon-machine.local.crt' Failed Harbor image push", 'responseType': 'ERROR'}
-```
-### Small problem fixed by moving the cert into a different file
-
-```
-root@arcas [ /opt/vmware/arcas/tools ]# cd /harbor_storage/cert/
-root@arcas [ /harbor_storage/cert ]# 
-root@arcas [ /harbor_storage/cert ]# cp *.crt /harbor_storage/cert/photon-machine.local.crt
-root@arcas [ /harbor_storage/cert ]# arcas --load_tanzu_image_to_harbor
 Load_Tanzu_Image: Load Tanzu Images to Harbor
 Load_Tanzu_Image: Load Tanzu Images to Harbor Successfully
-root@arcas [ /harbor_storage/cert ]# 
-
 ```
-### Outcome in Harbor 135 items loaded
+### Outcome in Harbor 157 items loaded
 
 ![Version](https://github.com/ogelbric/Arcas_with_Harbor/blob/main/harboroutcome.png)
 
 
+### Older trouble shooting steps below !!!
 
-## The manual way: 
+## The manual way:
 
 ### Lets check out the directory below and we see the tar file is not extracted 
 
